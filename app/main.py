@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 
 def find_program_in_path(program_name):
     # Get the PATH environment variable
@@ -36,7 +37,17 @@ def main():
             else:
                 print(f"{arg}: not found")
             continue
-        print(f"{user_input}: command not found")
+        else:
+            input_list = user_input.split(" ")
+            find_rst = find_program_in_path(input_list[0])
+            if (not find_rst):
+                print(f"{user_input}: command not found")
+                continue
+            # Execute the program with arguments
+            result = subprocess.run(input_list)
+            continue
+
+        # print(f"{user_input}: command not found")
 
 
 if __name__ == "__main__":
