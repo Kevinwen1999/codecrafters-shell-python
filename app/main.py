@@ -2,6 +2,18 @@ import sys
 import os
 import subprocess
 
+def pwd():
+    return os.getcwd()  # Returns the current working directory
+
+def cd(new_directory):
+    try:
+        os.chdir(new_directory)  # Changes the current working directory
+        return f"Changed directory to: {os.getcwd()}"
+    except FileNotFoundError:
+        return f"Error: Directory '{new_directory}' not found."
+    except PermissionError:
+        return f"Error: Permission denied to access '{new_directory}'."
+
 def find_program_in_path(program_name):
     # Get the PATH environment variable
     path_dirs = os.environ.get("PATH", "").split(os.pathsep)
@@ -17,7 +29,7 @@ def find_program_in_path(program_name):
 
 def main():
     
-    built_in_list = ["echo", "exit", "type"]
+    built_in_list = ["echo", "exit", "type", "pwd"]
 
     # Wait for user input
     while True:
@@ -37,6 +49,8 @@ def main():
             else:
                 print(f"{arg}: not found")
             continue
+        elif (user_input[0:3] == "pwd"):
+            print(f"{pwd()}")
         else:
             input_list = user_input.split(" ")
             find_rst = find_program_in_path(input_list[0])
