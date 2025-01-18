@@ -8,12 +8,12 @@ def pwd():
 def cd(new_directory):
     try:
         os.chdir(new_directory)  # Changes the current working directory
-        return f"Changed directory to: {os.getcwd()}"
+        return f"success"
     except FileNotFoundError:
-        return f"Error: Directory '{new_directory}' not found."
+        return f"cd: {new_directory}: No such file or directory"
     except PermissionError:
-        return f"Error: Permission denied to access '{new_directory}'."
-
+        return f"cd: {new_directory}: No such file or directory"
+    
 def find_program_in_path(program_name):
     # Get the PATH environment variable
     path_dirs = os.environ.get("PATH", "").split(os.pathsep)
@@ -51,6 +51,10 @@ def main():
             continue
         elif (user_input[0:3] == "pwd"):
             print(f"{pwd()}")
+        elif (user_input[0:3] == "cd "):
+            res = cd(user_input[3:])
+            if res != "success":
+                print(res)
         else:
             input_list = user_input.split(" ")
             find_rst = find_program_in_path(input_list[0])
