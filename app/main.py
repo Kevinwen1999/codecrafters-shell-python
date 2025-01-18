@@ -7,7 +7,10 @@ def pwd():
 
 def cd(new_directory):
     try:
-        os.chdir(new_directory)  # Changes the current working directory
+        if (new_directory == "~"):
+            os.chdir(os.environ.get("HOME", ""))
+        else:
+            os.chdir(new_directory)  # Changes the current working directory
         return f"success"
     except FileNotFoundError:
         return f"cd: {new_directory}: No such file or directory"
